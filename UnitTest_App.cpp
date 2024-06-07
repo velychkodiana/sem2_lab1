@@ -4,15 +4,17 @@
 #include "App.h"
 #include "MainFrame.h"
 
-// Макрос, що оголошує наш клас тесту як wxApp для wxWidgets
-class TestApp : public App {
+// оголошуємо клас тесту як wxApp для wxWidgets
+class TestApp : public App
+{
 public:
-    virtual bool OnInit() {
-        // Викликаємо базовий метод для ініціалізації
+    virtual bool OnInit() 
+{
+        // ініціалізуємо
         if (!App::OnInit())
             return false;
 
-        // Тестовий код для перевірки створеного вікна
+        //  перевіряємо чи створюється вікно
         mainFrame = wxDynamicCast(wxTheApp->GetTopWindow(), MainFrame);
         return true;
     }
@@ -20,27 +22,31 @@ public:
     MainFrame* mainFrame = nullptr;
 };
 
-// Оголошуємо тестовий клас для wxWidgets
+// оголошуємо тестовий клас для wxWidgets
 wxDECLARE_APP(TestApp);
 wxIMPLEMENT_APP_NO_MAIN(TestApp);
 
-class AppTest : public ::testing::Test {
+class AppTest : public ::testing::Test 
+{
 protected:
-    virtual void SetUp() {
-        // Ініціалізація wxWidgets
+    virtual void SetUp() 
+{
+        // ініціалізуємо wxWidgets
         int argc = 0;
         char** argv = nullptr;
         wxEntryStart(argc, argv);
         wxTheApp->CallOnInit();
     }
 
-    virtual void TearDown() {
+    virtual void TearDown() 
+{
         wxTheApp->OnExit();
         wxEntryCleanup();
     }
 };
 
-TEST_F(AppTest, MainFrameCreation) {
+TEST_F(AppTest, MainFrameCreation) 
+{
     TestApp* app = wxDynamicCast(wxTheApp, TestApp);
     ASSERT_NE(app, nullptr);
     ASSERT_NE(app->mainFrame, nullptr);
