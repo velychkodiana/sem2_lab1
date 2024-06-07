@@ -26,16 +26,17 @@ TEST(TaskTest, SaveTasksToFile) {
         EXPECT_EQ(description, task.description);
         EXPECT_EQ(done, task.done);
     }
-
+    
+// щоб видалити тестового файлу після перевірки
     file.close();
-    std::filesystem::remove(fileName);  // Видалення тестового файлу після перевірки
+    std::filesystem::remove(fileName);  
 }
 
 TEST(TaskTest, LoadTasksFromFile) {
     std::vector<Task> expectedTasks = {{"Task 1", false}, {"Task 2", true}};
     std::string fileName = "test_tasks_load.txt";
 
-    // Створюємо файл з даними
+    // створимо тестовий файл з даними
     {
         std::ofstream file(fileName);
         file << expectedTasks.size();
@@ -55,7 +56,8 @@ TEST(TaskTest, LoadTasksFromFile) {
         EXPECT_EQ(loadedTasks[i].done, expectedTasks[i].done);
     }
 
-    std::filesystem::remove(fileName);  // Видалення тестового файлу після перевірки
+    // видаляємо тестовий файлу після перевірки
+    std::filesystem::remove(fileName);  
 }
 
 TEST(TaskTest, LoadTasksFromFile_FileNotExist) {
